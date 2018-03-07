@@ -1,0 +1,68 @@
+
+<mat-toolbar color="primary">
+		<mat-toolbar-row>
+		  <span>Git Search</span>
+		  <span class="example-spacer"></span>
+		  <mat-icon class="example-icon">account_circle</mat-icon>
+		  <mat-icon class="example-icon">search</mat-icon>
+		</mat-toolbar-row>
+			</mat-toolbar>
+			<form class="example-form">
+				<div>
+			<mat-form-field class="example-full-width">
+			<span matTooltip="Git Search!"><input matInput  placeholder="Digite o nome de usuario do GitHub" [(ngModel)]="username" name="username" (keyup)="findProfile()">
+			</span>
+		</mat-form-field>
+	</div>
+</form>
+
+<div *ngIf="profile">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			{{profile.name}} <small>({{profile.login}})</small>
+			<span *ngIf="profile.company">, Trabalha em: {{profile.company}}</span>
+			{{profile.location}}
+		</div>
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-sm-3">
+					<img src="{{profile.avatar_url}}" class="img-circle img-responsive" alt="Profile Image">
+				</div>
+				<div class="col-sm-5">
+					<ul class="list-group">
+						<li class="list-group-item" class="btn btn-info" *ngIf="profile.bio">{{profile.bio}}</li>
+						<li class="list-group-item" class="btn btn-default" *ngIf="profile.hireable">Available for hire</li>
+						<li class="list-group-item" class="btn btn-default" *ngIf="profile.blog"><a href="{{profile.blog}}" target="_blank">{{profile.blog}}</a></li>
+						<li class="list-group-item" class="btn btn-default" *ngIf="profile.email"><a href="emailto:{{profile.email}}">{{profile.email}}</a></li>
+					</ul>
+				</div>
+				<div class="col-sm-4">
+					<div>
+						<p>
+							<span class="label label-default">{{profile.followers}} Seguidores</span>
+							<span class="label label-primary">Seguindo {{profile.following}}</span>
+							<span class="label label-success">{{profile.public_gists}} Gists Publicos</span>
+							<span class="label label-info">{{profile.public_repos}} Repositorios Publicos</span>
+						</p>
+						<p><a href="{{profile.html_url}}" target="_blank" class="btn btn-success btn-sm">Ver perfil no GitHub</a></p>
+						<div class="centertable">
+							<table class="table">
+								<tr>
+									<th>Projetos</th>
+									<th>Links</th>
+								 </tr>
+								<tr *ngFor="let repo of repos">
+									<td >{{repo.name}}</td>
+									<td ><a href="{{repo.html_url}}" target="_blank" class="btn btn-sm btn-warning pull-right">Ver projeto no GitHub</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<h4 id="hai">Membro desde: {{profile.created_at}}</h4>
+		<h4 id="hai">Perfil Atualizado em: {{profile.updated_at}}</h4>
+	</div>
+</div>
